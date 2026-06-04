@@ -14,12 +14,23 @@ form.addEventListener('submit', handleSubmit);
 
 function handleSubmit(event) {
   event.preventDefault();
+
+  const inputValue = form.elements['search-text'].value.trim();
+
+  if (!inputValue) {
+    iziToast.show({
+      message: 'Please enter a search query.',
+      position: 'topRight',
+      messageColor: '#fff',
+      backgroundColor: 'red',
+    });
+    return;
+  }
+
   showLoader();
   clearGallery();
-  const inputValue = form.elements['search-text'].value;
-  const requestedData = getImagesByQuery(inputValue);
 
-  requestedData
+  getImagesByQuery(inputValue)
     .then(response => {
       if (response.length === 0) {
         iziToast.show({
@@ -29,7 +40,10 @@ function handleSubmit(event) {
           messageColor: '#fff',
           backgroundColor: 'red',
         });
+
+        return;
       }
+
       createGallery(response);
     })
     .catch(error => {

@@ -9,7 +9,7 @@ export function createGallery(images) {
   let createdElements = [];
   images.forEach(image => {
     createdElements.push(`<li class="gallery-item">
-	<a class="gallery-link" href="${image.webformatURL}">
+	<a class="gallery-link" href="${image.largeImageURL}">
   <div class="image-wrapper">
     <img 
       class="gallery-image" 
@@ -45,11 +45,13 @@ export function createGallery(images) {
   if (lightbox) {
     lightbox.refresh();
   } else {
-    lightbox = new SimpleLightbox('.gallery a', {
-      captionsData: 'alt',
-      captionDelay: 250,
-      download: true,
-    });
+    console.log(SimpleLightbox);
+    console.log(SimpleLightbox.default);
+    console.log('SimpleLightbox =', SimpleLightbox);
+    lightbox = new SimpleLightbox.default('.gallery a', {
+    captionsData: 'alt',
+    captionDelay: 250,
+    download: true,});
   }
 }
 export function clearGallery() {
